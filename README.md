@@ -12,13 +12,15 @@ A comprehensive, bilingual (EN/ES) CLI suite designed for zkVerify node operator
 - **⚙️ Configuration Manager:** Interactive, first-time setup for your Mnemonic and Stash addresses.
 
 ## 🛠️ Quick Installation
-Compatible with Linux and macOS. The installer uses a Python Virtual Environment (`venv`) to ensure a clean, isolated setup.
+Compatible with Linux and macOS. The installer uses a Python Virtual Environment (venv) to ensure a clean, isolated setup.
 
 ```bash
-git clone [https://github.com/rorupuntou/zkv-control-center.git](https://github.com/rorupuntou/zkv-control-center.git)
+git clone https://github.com/rorupuntou/zkv-control-center.git
 cd zkv-control-center
 bash install.sh
 ./start.sh
+```
+
 🔐 Security First
 Local Processing: Your mnemonic is processed locally and never leaves your machine.
 
@@ -30,3 +32,4 @@ Configuration: All sensitive data is stored in config.yaml, which is automatical
 Switch between English/Spanish and Local/Volta/Mainnet directly from the main menu without editing any code.
 
 Built from the South. Support the Uruguayan Validator Node. Let's build a more transparent zkVerify together.
+
