@@ -1,0 +1,16 @@
+# Entornos Virtuales
+venv/
+env/
+
+# Archivos de Configuracion y Secretos
+config.yaml
+
+# Archivos temporales de Python
+__pycache__/
+core/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Logs
+*.log
