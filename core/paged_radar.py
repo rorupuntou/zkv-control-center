@@ -64,6 +64,20 @@ def get_total_stake(substrate, stash, era):
         return overview['total'] / 10**18 if overview else 0.0
     except: return 0.0
 
+def get_validator_commission(substrate, stash_address):
+    """
+    Consulta la comisión configurada por el validador.
+    El valor se guarda como un 'Perbill' (partes por billón).
+    """
+    try:
+        prefs = substrate.query('Staking', 'Validators', [stash_address])
+        if prefs.value and 'commission' in prefs.value:
+            # Convertimos Perbill a porcentaje (100% = 1,000,000,000)
+            return prefs.value['commission'] / 10_000_000
+    except Exception:
+        pass
+    return 0.0
+
 def audit_validator(substrate, target_stash, active_era, t):
     try:
         overview = substrate.query('Staking', 'ErasStakersOverview', [active_era, target_stash]).value
@@ -145,7 +159,10 @@ def run_paged_radar(override_env=None, override_lang=None):
             print(f"\n{t['list_title']}")
             for i, v in enumerate(list_to_show, 1):
                 stake = get_total_stake(substrate, v, active_era)
-                print(f" [{i:02d}] {v} | Stake: {stake:,.2f} VFY")
+                comm = get_validator_commission(substrate, v)
+                
+                # Aquí se formatea el Stake y la Comisión alineada a la derecha
+                print(f" [{i:02d}] {v} | Stake: {stake:12,.2f} VFY | Com: {comm:>5.2f}%")
             
             try:
                 idx = int(input(f"\n{t['idx_prompt'].format(count=len(list_to_show))}")) - 1
