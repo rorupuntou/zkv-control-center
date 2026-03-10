@@ -11,6 +11,7 @@ from core.paged_radar import run_paged_radar
 from core.identity_manager import run_identity_manager
 from core.gov_auditor import run_gov_auditor
 from core.config_manager import run_config_manager
+from core.nominator_wizard import run_nominator_wizard
 
 # --- DICCIONARIO DEL MENÚ PRINCIPAL ---
 TXT = {
@@ -27,8 +28,9 @@ TXT = {
         "opt_5": "5. 🆔 Identity Manager (Set On-Chain Name)",
         "opt_6": "6. 🏛️  Governance Auditor (OpenGov Scan)",
         "opt_7": "7. ⚙️  Configuration Manager (Keys & Addresses)",
-        "opt_env": "8. 🔄 Switch Environment (Local/Volta/Mainnet)",
-        "opt_lang": "9. 🌍 Switch Language (EN/ES)",
+        "opt_8": "8. 🧙‍♂️ Nominator Wizard (Staking Setup)",
+        "opt_env": "9. 🔄 Switch Environment (Local/Volta/Mainnet)",
+        "opt_lang": "10. 🌍 Switch Language (EN/ES)",
         "opt_exit": "0. ❌ Exit",
         "choice": "👉 Select an option: ",
         "bye": "👋 Closing Control Center. Happy Validating!",
@@ -47,8 +49,9 @@ TXT = {
         "opt_5": "5. 🆔 Gestor de Identidad (Nombre On-Chain)",
         "opt_6": "6. 🏛️  Auditor de Gobernanza (OpenGov)",
         "opt_7": "7. ⚙️  Gestor de Configuración (Llaves y Direcciones)",
-        "opt_env": "8. 🔄 Cambiar Entorno (Local/Volta/Mainnet)",
-        "opt_lang": "9. 🌍 Cambiar Idioma (EN/ES)",
+        "opt_8": "8. 🧙‍♂️ Asistente de Nominación (Crear Staker)",
+        "opt_env": "9. 🔄 Cambiar Entorno (Local/Volta/Mainnet)",
+        "opt_lang": "10. 🌍 Cambiar Idioma (EN/ES)",
         "opt_exit": "0. ❌ Salir",
         "choice": "👉 Selecciona una opción: ",
         "bye": "👋 Cerrando Control Center. ¡Éxitos validando!",
@@ -127,6 +130,7 @@ def main():
         print(f"  {t['opt_5']}")
         print(f"  {t['opt_6']}")
         print(f"  {t['opt_7']}")
+        print(f"  {t['opt_8']}")
         print("\n  " + "."*35 + "\n")
         
         # Opciones de Entorno y Salida
@@ -153,10 +157,12 @@ def main():
             clear_screen(); run_config_manager(override_lang=current_lang)
             config = load_config() 
         elif choice == '8':
+            clear_screen(); run_nominator_wizard(override_env=current_env, override_lang=current_lang)
+        elif choice == '9':
             envs = ['local', 'volta', 'mainnet']
             idx = envs.index(current_env)
             current_env = envs[(idx + 1) % len(envs)]
-        elif choice == '9':
+        elif choice == '10':
             current_lang = "es" if current_lang == "en" else "en"
         elif choice == '0':
             print(f"\n{t['bye']}")
