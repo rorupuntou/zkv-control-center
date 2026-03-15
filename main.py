@@ -17,6 +17,9 @@ from core.identity_manager import run_identity_manager
 from core.gov_auditor import run_gov_auditor
 from core.config_manager import run_config_manager
 from core.nominator_wizard import run_nominator_wizard
+# ¡Nuevos módulos agregados!
+from core.security_auditor import run_security_auditor
+from core.smart_claimer import run_smart_claimer # Lo descomentamos cuando lo creemos
 
 console = Console()
 
@@ -36,8 +39,10 @@ TXT = {
         "opt_6": "6. 🏛️  Governance Auditor",
         "opt_7": "7. ⚙️  Configuration Manager",
         "opt_8": "8. 🧙‍♂️ Nominator Wizard",
-        "opt_env": "9. 🔄 Switch Environment",
-        "opt_lang": "10. 🌍 Switch Language",
+        "opt_9": "9. 🔒 DeepSec Net Auditor",
+        "opt_10": "10. 🤑 Smart Yield Claimer",
+        "opt_env": "11. 🔄 Switch Environment",
+        "opt_lang": "12. 🌍 Switch Language",
         "opt_exit": "0. ❌ Exit",
         "choice": "👉 Select an option",
         "bye": "👋 Closing Control Center. Happy Validating!",
@@ -57,8 +62,10 @@ TXT = {
         "opt_6": "6. 🏛️  Auditor de Gobernanza",
         "opt_7": "7. ⚙️  Gestor de Configuración",
         "opt_8": "8. 🧙‍♂️ Asistente de Nominación",
-        "opt_env": "9. 🔄 Cambiar Entorno",
-        "opt_lang": "10. 🌍 Cambiar Idioma",
+        "opt_9": "9. 🔒 Auditor DeepSec de Red",
+        "opt_10": "10. 🤑 Gestor de Rendimiento",
+        "opt_env": "11. 🔄 Cambiar Entorno",
+        "opt_lang": "12. 🌍 Cambiar Idioma",
         "opt_exit": "0. ❌ Salir",
         "choice": "👉 Selecciona una opción",
         "bye": "👋 Cerrando Control Center. ¡Éxitos validando!",
@@ -111,13 +118,15 @@ def main():
         status_table.add_row(f"[bold yellow]{t['env']}:[/bold yellow] [green]{current_env.upper()}[/green]", f"[bold yellow]{t['lang']}:[/bold yellow] [green]{current_lang.upper()}[/green]")
         console.print(Panel(status_table, border_style="yellow", expand=False))
 
+        # Reorganizamos la tabla a dos columnas balanceadas
         menu_table = Table(show_header=False, box=None, padding=(0, 2))
         menu_table.add_row(f"[cyan]{t['opt_1']}[/cyan]", f"[magenta]{t['opt_7']}[/magenta]")
         menu_table.add_row(f"[cyan]{t['opt_2']}[/cyan]", f"[magenta]{t['opt_8']}[/magenta]")
-        menu_table.add_row(f"[cyan]{t['opt_3']}[/cyan]", "")
-        menu_table.add_row(f"[cyan]{t['opt_4']}[/cyan]", f"[blue]{t['opt_env']}[/blue]")
-        menu_table.add_row(f"[cyan]{t['opt_5']}[/cyan]", f"[blue]{t['opt_lang']}[/blue]")
-        menu_table.add_row(f"[cyan]{t['opt_6']}[/cyan]", f"[red]{t['opt_exit']}[/red]")
+        menu_table.add_row(f"[cyan]{t['opt_3']}[/cyan]", f"[magenta]{t['opt_9']}[/magenta]")
+        menu_table.add_row(f"[cyan]{t['opt_4']}[/cyan]", f"[magenta]{t['opt_10']}[/magenta]")
+        menu_table.add_row(f"[cyan]{t['opt_5']}[/cyan]", f"[blue]{t['opt_env']}[/blue]")
+        menu_table.add_row(f"[cyan]{t['opt_6']}[/cyan]", f"[blue]{t['opt_lang']}[/blue]")
+        menu_table.add_row("", f"[red]{t['opt_exit']}[/red]")
         
         console.print(Panel(menu_table, title=f"[bold green]{t['menu']}[/bold green]", border_style="green", expand=False))
 
@@ -134,10 +143,14 @@ def main():
             clear_screen(); run_config_manager(override_lang=current_lang)
             config = load_config() 
         elif choice == '8': clear_screen(); run_nominator_wizard(override_env=current_env, override_lang=current_lang)
-        elif choice == '9':
+        elif choice == '9': clear_screen(); run_security_auditor(override_env=current_env, override_lang=current_lang)
+        elif choice == '10': 
+            time.sleep(1.5)
+            clear_screen(); run_smart_claimer(override_env=current_env, override_lang=current_lang)
+        elif choice == '11':
             envs = ['local', 'volta', 'mainnet']
             current_env = envs[(envs.index(current_env) + 1) % len(envs)]
-        elif choice == '10':
+        elif choice == '12':
             current_lang = "es" if current_lang == "en" else "en"
         elif choice == '0':
             console.print(f"\n[bold green]{t['bye']}[/bold green]")
